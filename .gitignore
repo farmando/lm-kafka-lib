@@ -3,3 +3,26 @@
 
 # Ignore Gradle build output directory
 build
+# Compiled class file
+*.class
+# Log file
+*.log
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+/.idea/
+/.vscode/
+*.iml
+#DotEnv File #
+.env
+*.env
+## target folder at any level of the project structue
+**/target
+/target
+
+.DS_Store
