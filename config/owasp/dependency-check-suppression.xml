@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd ">
+    <!-- Suppressing CVE-2023-35116 for jackson-databind -->
+    <suppress>
+        <notes>
+            Suppress CVE-2023-35116 for jackson-databind
+            NOTE: the vendor's perspective is that this is not a valid vulnerability report, because the steps of constructing
+            a cyclic data structure and trying to serialize it cannot be achieved by an external attacker.
+            More details: https://nvd.nist.gov/vuln/detail/CVE-2023-35116
+        </notes>
+        <cpe>cpe:/a:fasterxml:jackson-databind:2.13.4.1</cpe>
+        <vulnerabilityName>CVE-2023-35116 for jackson-databind</vulnerabilityName>
+    </suppress>
+
+    <!-- Suppressing CVE-2023-20873 for spring-security-oauth2-autoconfigure -->
+    <suppress>
+        <notes>
+            Suppress CVE-2023-20873 for spring-security-oauth2-autoconfigure.
+            Specifically, an application is vulnerable when all of the following are true:
+
+            You have code that can handle requests that match /cloudfoundryapplication/**. Typically, this will be if there is a catch-all request mapping which matches /**.
+            The application is deployed to Cloud Foundry.
+            NOTE: Applications using Spring Cloud Config Server can handle requests to /cloudfoundryapplication/** by default and can be vulnerable if deployed to Cloud Foundry.
+
+            An application is not vulnerable if any of the following is true:
+
+            The application is not deployed to Cloud Foundry
+            You have disabled Cloud Foundry actuator endpoints with management.cloudfoundry.enabled set to false.
+            Your application does not have handler mappings that can handle requests to /cloudfoundryapplication/**.
+            Affected Spring Products and Versions
+            Spring Boot
+            3.0.0 to 3.0.5
+            2.7.0 to 2.7.10
+            2.6.0 to 2.6.14
+            2.5.0 to 2.5.14
+            Older, unsupported versions are also affected
+            More details https://spring.io/security/cve-2023-20873
+        </notes>
+        <cpe>cpe:/a:vmware:spring:2.6.8</cpe>
+        <vulnerabilityName>CVE-2023-20873 for spring-security-oauth2-autoconfigure</vulnerabilityName>
+    </suppress>
+
+    <!-- Suppressing CVE-2023-20883 for spring-security-oauth2-autoconfigure -->
+    <suppress>
+        <notes>
+            Suppress CVE-2023-20883 for spring_security_oauth2_autoconfigure.
+            In Spring Boot versions
+            3.0.0 - 3.0.6, 2.7.0 - 2.7.11, 2.6.0 - 2.6.14, 2.5.0 - 2.5.14 and older unsupported versions, there is potential for a denial-of-service (DoS) attack if Spring MVC is used together with a reverse proxy cache.
+
+            Specifically, an application is vulnerable if all of the conditions are true:
+
+            The application has Spring MVC auto-configuration enabled. This is the case by default if Spring MVC is on the classpath.
+            The application makes use of Spring Boot's welcome page support, either static or templated.
+            Your application is deployed behind a proxy which caches 404 responses.
+            Your application is NOT vulnerable if any of the following are true:
+
+            Spring MVC auto-configuration is disabled. This is true if WebMvcAutoConfiguration is explicitly excluded, if Spring MVC is not on the classpath, or if spring.main.web-application-type is set to a value other than SERVLET.
+            The application does not use Spring Boot's welcome page support.
+            You do not have a proxy which caches 404 responses.
+            Affected Spring Products and Versions
+            Spring Boot
+
+            3.0.0 to 3.0.6 2.7.0 to 2.7.11 2.6.0 to 2.6.14 2.5.0 to 2.5.14
+
+            Older, unsupported versions are also affected
+            More details on https://spring.io/security/cve-2023-20883
+        </notes>
+        <cpe>cpe:/a:vmware:spring_boot:2.6.8</cpe>
+        <vulnerabilityName>CVE-2023-20883 for spring-security-oauth2-autoconfigure</vulnerabilityName>
+    </suppress>
+
+    <!-- Suppressing CVE-2023-33202 for spring-security-oauth2-autoconfigure -->
+    <suppress>
+        <notes>
+            file name: bcpkix-jdk15on-1.64.jar
+
+            Issue affecting: BC Java 1.72 and earlier. BC-FJA 1.0.2.3 and earlier.
+
+            Fixed versions: BC Java 1.73. BC-FJA 1.0.2.4. [commercial-approval is using version 1.77]
+            Platform affected: All JVMs.
+            Bouncy Castle for Java 1.72 and earlier contains a potential Denial of Service (DoS) issue within the Bouncy
+            Castle org.bouncycastle.openssl.PEMParser class.
+            This class parses OpenSSL PEM encoded streams containing X.509 certificates, PKCS8 encoded keys, and PKCS7
+            objects. Parsing a file that has crafted ASN.1 data through the PEMParser causes an OutOfMemoryError, which
+            can enable a denial of service attack.
+
+            The attack can be avoided by either updating or filtering PEM requests containing EXTERNAL tagged encodings.
+            While the issue did show up with PEM parsing it eventually turned out that it was a side-effect of a method
+            in the ASN.1 SET class which is fixed in the following commit:
+
+            more details on:
+            https://github.com/bcgit/bc-java/commit/0c576892862ed41894f49a8f639112e8d66d229c
+            https://github.com/bcgit/bc-java/wiki/CVE-2023-33202
+            https://www.cvedetails.com/cve/CVE-2023-33202/
+            https://www.bouncycastle.org/releasenotes.html#r1rv77
+        </notes>
+        <packageUrl regex="true">^pkg:maven/org\.bouncycastle/bcpkix\-jdk15on@.*$</packageUrl>
+        <cve>CVE-2023-33202</cve>
+    </suppress>
+</suppressions>

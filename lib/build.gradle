@@ -1,0 +1,59 @@
+plugins{
+    id 'java-library'
+    id 'maven-publish'
+    id 'checkstyle'
+    alias(libs.plugins.freefair.lombok).apply(true)
+    alias(libs.plugins.spring.boot.plugin).apply(true)
+}
+
+group = 'br.com.leroy.merlin'
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+    maven {
+        url = "https://packages.confluent.io/maven/"
+    }
+    maven {
+        url = 'https://jitpack.io'
+    }
+}
+
+dependencies {
+    implementation(libs.springboot.starter.web)
+    implementation(libs.spring.kafka)
+    implementation(libs.kafka.avro.serializer)
+    implementation(libs.kafka.schema.registry.client)
+    implementation(libs.avro)
+    implementation(libs.starter.actuator)
+}
+
+checkstyle {
+    toolVersion '8.40'
+    maxWarnings = 0
+    ignoreFailures false
+    configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+tasks.withType(Checkstyle).configureEach {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}

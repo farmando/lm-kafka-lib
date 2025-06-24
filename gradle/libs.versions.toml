@@ -1,0 +1,19 @@
+[versions]
+freefair-lombok = "8.13.1"
+spring-boot-plugin = "3.5.0"
+spring-kafka = "3.3.6"
+kafka-avro-serializer = "7.9.1"
+avro = "1.12.0"
+starter-actuator = "3.5.3"
+
+[libraries]
+springboot-starter-web = {module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot-plugin"}
+spring-kafka = {module = "org.springframework.kafka:spring-kafka", version.ref = "spring-kafka"}
+kafka-avro-serializer = {module = "io.confluent:kafka-avro-serializer", version.ref = "kafka-avro-serializer"}
+kafka-schema-registry-client = {module = "io.confluent:kafka-schema-registry-client", version.ref = "kafka-avro-serializer"}
+avro = {module = "org.apache.avro:avro", version.ref = "avro"}
+starter-actuator = {module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "starter-actuator"}
+
+[plugins]
+freefair-lombok = {id = "io.freefair.lombok", version.ref = "freefair-lombok"}
+spring-boot-plugin = {id = "org.springframework.boot", version.ref = "spring-boot-plugin"}
