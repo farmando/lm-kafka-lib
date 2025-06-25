@@ -34,6 +34,17 @@ dependencies {
     implementation(libs.kafka.schema.registry.client)
     implementation(libs.avro)
     implementation(libs.starter.actuator)
+
+    testImplementation(libs.springboot.starter.test)
+    testImplementation(libs.junit.jupiter)
+}
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+        }
+    }
 }
 
 checkstyle {

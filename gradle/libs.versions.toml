@@ -5,6 +5,7 @@ spring-kafka = "3.3.6"
 kafka-avro-serializer = "7.9.1"
 avro = "1.12.0"
 starter-actuator = "3.5.3"
+junit-jupiter = "5.13.1"
 
 [libraries]
 springboot-starter-web = {module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot-plugin"}
@@ -13,6 +14,9 @@ kafka-avro-serializer = {module = "io.confluent:kafka-avro-serializer", version.
 kafka-schema-registry-client = {module = "io.confluent:kafka-schema-registry-client", version.ref = "kafka-avro-serializer"}
 avro = {module = "org.apache.avro:avro", version.ref = "avro"}
 starter-actuator = {module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "starter-actuator"}
+
+springboot-starter-test = {module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot-plugin"}
+junit-jupiter = {module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter"}
 
 [plugins]
 freefair-lombok = {id = "io.freefair.lombok", version.ref = "freefair-lombok"}
