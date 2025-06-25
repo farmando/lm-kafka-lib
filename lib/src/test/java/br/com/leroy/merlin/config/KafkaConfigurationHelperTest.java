@@ -1,6 +1,7 @@
 package br.com.leroy.merlin.config;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
@@ -51,7 +52,8 @@ class KafkaConfigurationHelperTest {
     // given
     when(properties.getSecurityProtocol()).thenReturn("SASL_SSL");
     when(properties.getSaslMechanism()).thenReturn("PLAIN");
-    when(properties.getSaslJaasConfig()).thenReturn("org.apache.kafka.common.security.plain.PlainLoginModule required username=\"user\" password=\"pass\";");
+    when(properties.getSaslJaasConfig()).thenReturn(
+        "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"user\" password=\"pass\";");
     when(properties.getSslEndpointIdentificationAlgorithm()).thenReturn("https");
     Map<String, Object> props = new HashMap<>();
 
@@ -62,7 +64,8 @@ class KafkaConfigurationHelperTest {
     assertEquals(4, props.size());
     assertEquals("SASL_SSL", props.get(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG));
     assertEquals("PLAIN", props.get(SaslConfigs.SASL_MECHANISM));
-    assertEquals("org.apache.kafka.common.security.plain.PlainLoginModule required username=\"user\" password=\"pass\";",
+    assertEquals(
+        "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"user\" password=\"pass\";",
         props.get(SaslConfigs.SASL_JAAS_CONFIG));
     assertEquals("https", props.get(SslConfigs.SSL_ENDPOINT_IDENTIFICATION_ALGORITHM_CONFIG));
   }
