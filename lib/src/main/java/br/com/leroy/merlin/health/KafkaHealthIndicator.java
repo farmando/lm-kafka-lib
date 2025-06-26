@@ -2,7 +2,6 @@ package br.com.leroy.merlin.health;
 
 import br.com.leroy.merlin.config.CommonKafkaProperties;
 import br.com.leroy.merlin.config.KafkaProperties;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
