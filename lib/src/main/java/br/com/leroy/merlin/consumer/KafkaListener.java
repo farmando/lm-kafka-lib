@@ -7,10 +7,14 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@org.springframework.kafka.annotation.KafkaListener(topics = "#{__listener.topic}")
-
+@org.springframework.kafka.annotation.KafkaListener
 public @interface KafkaListener {
+  @AliasFor(annotation = org.springframework.kafka.annotation.KafkaListener.class, attribute = "topics")
   String topic();
+
+  @AliasFor(annotation = org.springframework.kafka.annotation.KafkaListener.class, attribute = "groupId")
   String groupId() default "";
+
+  @AliasFor(annotation = org.springframework.kafka.annotation.KafkaListener.class, attribute = "concurrency")
   String concurrency() default "1";
 }
