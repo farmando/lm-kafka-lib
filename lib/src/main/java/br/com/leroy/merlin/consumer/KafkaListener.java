@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 public @interface KafkaListener {
   String topic();
   String groupId() default "";
-  int concurrency() default 1;
+  String concurrency() default "1";
 }
