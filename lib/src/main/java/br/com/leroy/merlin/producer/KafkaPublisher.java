@@ -26,7 +26,7 @@ public class KafkaPublisher<K, V> implements Publisher<K, V> {
               metadata.topic(),
               metadata.partition(),
               metadata.offset(),
-              Optional.of(message.key()).map(Object::toString).orElse("null"));
+              Optional.ofNullable(message.key()).map(Object::toString).orElse("null"));
         })
         .exceptionally(throwable -> {
           log.error("Error sending message to topic {}: {}",
