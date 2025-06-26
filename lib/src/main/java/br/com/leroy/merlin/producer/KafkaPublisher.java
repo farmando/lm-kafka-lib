@@ -1,5 +1,6 @@
 package br.com.leroy.merlin.producer;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -18,15 +19,19 @@ public class KafkaPublisher<K, V> implements Publisher<K, V> {
   }
 
   @Override
+  @SuppressWarnings("java:S4449")
   public CompletableFuture<Void> publish(String topic, GenericMessage<K, V> message) {
     return kafkaTemplate.send(topic, message.key(), message.value())
         .thenAccept(sendResult -> {
           RecordMetadata metadata = sendResult.getRecordMetadata();
+
+          String messageKey = Optional.of(message.key()).map(Objects::toString).orElse("null");
+
           log.debug("Message sent successfully to topic={}, partition={}, offset={}, key={}",
               metadata.topic(),
               metadata.partition(),
               metadata.offset(),
-              Optional.ofNullable(message.key()).map(Object::toString).orElse("null"));
+              messageKey);
         })
         .exceptionally(throwable -> {
           log.error("Error sending message to topic {}: {}",
