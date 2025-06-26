@@ -25,7 +25,7 @@ public class KafkaPublisher<K, V> implements Publisher<K, V> {
         .thenAccept(sendResult -> {
           RecordMetadata metadata = sendResult.getRecordMetadata();
 
-          String messageKey = Optional.of(message.key()).map(Objects::toString).orElse("null");
+          String messageKey = Optional.ofNullable(message.key()).map(Objects::toString).orElse("null");
 
           log.debug("Message sent successfully to topic={}, partition={}, offset={}, key={}",
               metadata.topic(),
