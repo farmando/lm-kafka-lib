@@ -1,12 +1,17 @@
 package br.com.leroy.merlin.health;
 
+import br.com.leroy.merlin.config.CommonKafkaProperties;
 import br.com.leroy.merlin.config.KafkaProperties;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.ListTopicsOptions;
+import org.apache.kafka.common.config.SaslConfigs;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.util.StringUtils;
@@ -35,9 +40,7 @@ public class KafkaHealthIndicator implements HealthIndicator {
             .build();
       }
 
-      adminClient = AdminClient.create(
-          Collections.singletonMap(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
-      );
+      adminClient = AdminClient.create(createAdminClientConfig(bootstrapServers));
 
       ListTopicsOptions options = new ListTopicsOptions().timeoutMs(timeout);
       adminClient.listTopics(options).names().get(timeout, TimeUnit.MILLISECONDS);
@@ -82,5 +85,35 @@ public class KafkaHealthIndicator implements HealthIndicator {
     return kafkaProperties.getConsumer() != null
         ? kafkaProperties.getConsumer().getBootstrapServers()
         : null;
+  }
+
+  private Map<String, Object> createAdminClientConfig(String bootstrapServers) {
+    Map<String, Object> config = new HashMap<>();
+    config.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    config.put(AdminClientConfig.REQUEST_TIMEOUT_MS_CONFIG, timeout);
+    config.put(AdminClientConfig.RETRIES_CONFIG, 2);
+
+    if (kafkaProperties.getProducer() != null) {
+      CommonKafkaProperties producer = kafkaProperties.getProducer();
+
+      if (StringUtils.hasText(producer.getSecurityProtocol())) {
+        config.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG,
+            producer.getSecurityProtocol());
+      }
+      if (StringUtils.hasText(producer.getSaslMechanism())) {
+        config.put(SaslConfigs.SASL_MECHANISM,
+            producer.getSaslMechanism());
+      }
+      if (StringUtils.hasText(producer.getSaslJaasConfig())) {
+        config.put(SaslConfigs.SASL_JAAS_CONFIG,
+            producer.getSaslJaasConfig());
+      }
+      if (StringUtils.hasText(producer.getSchemaRegistryUrl())) {
+        config.put("schema.registry.url",
+            producer.getSchemaRegistryUrl());
+      }
+    }
+
+    return config;
   }
 }

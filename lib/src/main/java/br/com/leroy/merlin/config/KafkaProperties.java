@@ -16,7 +16,7 @@ public class KafkaProperties {
 
   @Data
   public static class KafkaHealthProperties {
-    private static final int DEFAULT_TIMEOUT = 5000;
+    private static final int DEFAULT_TIMEOUT = 10000;
     /**
      * Whether to enable Kafka health indicators.
      */
