@@ -28,10 +28,11 @@ repositories {
 }
 
 dependencies {
+    api(libs.spring.kafka)
+    api(libs.kafka.avro.serializer)
+    api(libs.kafka.schema.registry.client)
+
     implementation(libs.springboot.starter.web)
-    implementation(libs.spring.kafka)
-    implementation(libs.kafka.avro.serializer)
-    implementation(libs.kafka.schema.registry.client)
     implementation(libs.avro)
     implementation(libs.starter.actuator)
 
