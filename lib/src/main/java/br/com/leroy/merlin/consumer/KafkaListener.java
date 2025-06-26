@@ -7,7 +7,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@org.springframework.kafka.annotation.KafkaListener
+@org.springframework.kafka.annotation.KafkaListener(topics = "#{__listener.topic}")
+
 public @interface KafkaListener {
   String topic();
   String groupId() default "";
